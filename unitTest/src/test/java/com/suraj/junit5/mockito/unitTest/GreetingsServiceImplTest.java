@@ -1,5 +1,6 @@
 package com.suraj.junit5.mockito.unitTest;
 
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.Assertions;
@@ -25,6 +26,24 @@ public class GreetingsServiceImplTest {
 		String result = greeting.sayHello("suraj");
 		Assertions.assertNotNull(result);
 		Assertions.assertEquals("My name is suraj",result);
+	}
+	
+	@Test
+	public void sayHelloProperlyShouldThrowException() {
+		System.out.println("Greeting is bad should throw Name is null");
+		doThrow(IllegalArgumentException.class).when(service).sayHello(null);
+		Assertions.assertThrows(IllegalArgumentException.class, ()->{
+			greeting.sayHello(null);
+		});
+	}
+	
+	@Test
+	public void sayHelloProperlyShouldThrowifNameBlankException() {
+		System.out.println("Greeting is bad should throw Name is blank");
+		doThrow(IllegalArgumentException.class).when(service).sayHello("");
+		Assertions.assertThrows(IllegalArgumentException.class, ()->{
+			greeting.sayHello("");
+		});
 	}
 
 	
